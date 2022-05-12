@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: #B4C7A8;
+  background-color: #398AB9;
 }
 
 /*  Login   */
@@ -12,51 +12,65 @@ body {
   align-items: center;
   display: flex;
   justify-content: center;
-  background-color: #B4C7A8;
   margin: 0px;
   height: 100vh;
   width: 100vw;
 }
 
 .card-container {
-  box-shadow: 3px 3px #468B84;
+  box-shadow: 3px 3px #1C658C;
   font-size: large;
   width: 25rem;
   height: 25rem;
 }
 
 .card-title {
-  color: #468B84; 
+  color: #1C658C; 
   margin-bottom: 20px;
   font-size: 42px;
+  font-weight: bold;
   text-align: center;
 }
 
 .card-subTitle{
-  color: #468B84; 
+  color: #1C658C; 
   margin-bottom: 20px;
   font-size: 22px;
+  font-weight: bold;
   text-align: center;
 }
 
 .card-button {
   width: 100%;
-  background-color: #468B84;
-  border-color: #468B84;
+  background-color: #1C658C;
+  border-color: #1C658C;
   color: #fff;
   font-size: x-large;
 }
 
 .card-button:hover {
-  background-color: #468B84;
-  border-color: #468B84;
-  color: #B4C7A8;
+  background-color: #1C658C;
+  border-color: #1C658C;
+  color: #D8D2CB;
 }
 
 /*  Navbar   */
 .nav-bg {
-  background-color: #468B84;
+  background-color: #1C658C;
   font-size: 22px;
+}
+
+.nav-title {
+  color: #D8D2CB;
+  font-size: 26px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.nav-subtitle {
+  color: #D8D2CB;
+  font-size: 20px;
+  margin-top: 10px;
 }
 
 /*  Storage Table   */

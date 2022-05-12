@@ -1,9 +1,13 @@
 import { NavBar } from '../ui/NavBar';
-import { Form, Button, Table } from 'react-bootstrap';
+import { Form, Button, Table, Col } from 'react-bootstrap';
 import { useState } from 'react';
 
 export const AddProduct = () => {
   const [products, setProducts] = useState([]);
+
+  const [name, setName] = useState('');
+  const [mark, setMark] = useState('');
+  const [code, setCode] = useState('');
 
   return (
     <>
@@ -11,12 +15,24 @@ export const AddProduct = () => {
       <div className='table-pd'>
         <Form>
           <Form.Group className='mb-3' controlId='formBasicName'>
-            <Form.Label>Producto a buscar</Form.Label>
+            <Form.Label>Nombre</Form.Label>
             <Form.Control
               type='text'
-              placeholder='Nombre / Marca / Código'
-              value={products}
+              placeholder='Nombre del producto'
+              value={name}
             />
+          </Form.Group>
+          <Form.Group className='mb-3' controlId='formBasicMark'>
+            <Form.Label>Marca</Form.Label>
+            <Form.Control
+              type='text'
+              placeholder='Coca-Cola / Pepsi'
+              value={mark}
+            />
+          </Form.Group>
+          <Form.Group className='mb-3' controlId='formBasicCode'>
+            <Form.Label>Código</Form.Label>
+            <Form.Control type='text' placeholder='123456789' value={code} />
           </Form.Group>
           <Form.Group className='mb-3' controlId='formBasicName'>
             <Form.Label>Área del producto</Form.Label>
@@ -25,12 +41,20 @@ export const AddProduct = () => {
               <option>Sistemas</option>
             </Form.Select>
           </Form.Group>
-          <Button variant='primary' type='submit'>
-            <i className='fa-solid fa-magnifying-glass'></i>
-          </Button>
-          <Button variant='danger' type='submit'>
-            <i className='fa-solid fa-trash'></i>
-          </Button>
+          <Col sm='2'>
+            <div className='d-grid gap-2'>
+              <Button variant='primary' type='submit'>
+                <i className='fa-solid fa-magnifying-glass'></i>
+              </Button>
+            </div>
+          </Col>
+          <Col sm='2'>
+            <div className='d-grid gap-2'>
+              <Button variant='danger' type='submit'>
+                <i className='fa-solid fa-trash'></i>
+              </Button>
+            </div>
+          </Col>
           <Table striped bordered hover>
             <thead>
               <tr>
