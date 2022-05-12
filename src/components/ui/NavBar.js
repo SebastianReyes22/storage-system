@@ -23,6 +23,11 @@ export const NavBar = () => {
               <h2 className='nav-subtitle'>Nuevo Producto</h2>
             </Nav.Link>
           </Nav>
+          <Nav.Link href='/'>
+            <h2 className='nav-subtitle'>
+              <i className='fa-solid fa-arrow-right-from-bracket'></i> Salir
+            </h2>
+          </Nav.Link>
         </Navbar.Collapse>
       </Container>
     </Navbar>
