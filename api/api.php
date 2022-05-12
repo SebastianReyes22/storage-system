@@ -16,7 +16,7 @@ if ($_POST['action'] == 'getProducts') {
     $array = [];
     $x = 0;
 
-    $sql = 'SELECT * FROM management_products';
+    $sql = 'SELECT * FROM products';
     $stmt = $db->prepare($sql);
     $stmt->execute();
 
@@ -40,7 +40,7 @@ if ($_POST['action'] == 'addProduct') {
     $array = [];
     $x = 0;
 
-    $sql = "SELECT * FROM management_products WHERE name_product LIKE CONCAT('%', :name_product '%') 
+    $sql = "SELECT * FROM products WHERE name_product LIKE CONCAT('%', :name_product '%') 
             AND mark LIKE CONCAT('%', :mark '%') AND serial_number LIKE CONCAT('%', :serial_number '%')";
 
     $stmt = $db->prepare($sql);

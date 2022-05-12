@@ -1,60 +1,122 @@
 import { NavBar } from '../ui/NavBar';
-import { Form, Button, Table, Col } from 'react-bootstrap';
+import { Form, Button, Table, Col, Row } from 'react-bootstrap';
 import { useState } from 'react';
+import Axios from 'axios';
 
 export const AddProduct = () => {
+  const URI = process.env.REACT_APP_SERVER_URL;
+
   const [products, setProducts] = useState([]);
 
   const [name, setName] = useState('');
   const [mark, setMark] = useState('');
   const [code, setCode] = useState('');
 
+  const handleChangeName = e => {
+    e.preventDefault();
+    setName(e.target.value);
+  };
+
+  const handleChangeMark = e => {
+    e.preventDefault();
+    setMark(e.target.value);
+  };
+
+  const handleChangeCode = e => {
+    e.preventDefault();
+    setCode(e.target.value);
+  };
+
+  const handleSubmit = async () => {
+    let formData = new FormData();
+    formData.append('action', 'addProduct');
+    formData.append('name_product', name);
+    formData.append('mark', mark);
+    formData.append('serial_number', code);
+
+    await Axios({
+      method: 'POST',
+      url: URI,
+      data: formData,
+      config: { headers: { 'Content-Type': 'multipart/form-data' } },
+    })
+      .then(res => {
+        console.log(res);
+        setProducts(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   return (
     <>
       <NavBar />
       <div className='table-pd'>
         <Form>
-          <Form.Group className='mb-3' controlId='formBasicName'>
-            <Form.Label>Nombre</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Nombre del producto'
-              value={name}
-            />
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formBasicMark'>
-            <Form.Label>Marca</Form.Label>
-            <Form.Control
-              type='text'
-              placeholder='Coca-Cola / Pepsi'
-              value={mark}
-            />
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formBasicCode'>
-            <Form.Label>Código</Form.Label>
-            <Form.Control type='text' placeholder='123456789' value={code} />
-          </Form.Group>
-          <Form.Group className='mb-3' controlId='formBasicName'>
-            <Form.Label>Área del producto</Form.Label>
-            <Form.Select className='mb-3'>
-              <option>Administración</option>
-              <option>Sistemas</option>
-            </Form.Select>
-          </Form.Group>
-          <Col sm='2'>
-            <div className='d-grid gap-2'>
-              <Button variant='primary' type='submit'>
-                <i className='fa-solid fa-magnifying-glass'></i>
-              </Button>
-            </div>
-          </Col>
-          <Col sm='2'>
-            <div className='d-grid gap-2'>
-              <Button variant='danger' type='submit'>
-                <i className='fa-solid fa-trash'></i>
-              </Button>
-            </div>
-          </Col>
+          <Row>
+            <Col sm='4'>
+              <Form.Group className='mb-3' controlId='formBasicName'>
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Nombre del producto'
+                  autoComplete='off'
+                  value={name}
+                  onChange={handleChangeName}
+                />
+              </Form.Group>
+            </Col>
+            <Col sm='4'>
+              <Form.Group className='mb-3' controlId='formBasicMark'>
+                <Form.Label>Marca</Form.Label>
+                <Form.Control
+                  type='text'
+                  placeholder='Coca-Cola / Pepsi'
+                  autoComplete='off'
+                  value={mark}
+                  onChange={handleChangeMark}
+                />
+              </Form.Group>
+            </Col>
+            <Col sm='4'>
+              <Form.Group className='mb-3' controlId='formBasicCode'>
+                <Form.Label>Código</Form.Label>
+                <Form.Control
+                  type='number'
+                  placeholder='123456789'
+                  autoComplete='off'
+                  maxLength={19}
+                  value={code}
+                  onChange={handleChangeCode}
+                />
+              </Form.Group>
+            </Col>
+            <Col sm='4'>
+              <Form.Group className='mb-3' controlId='formBasicName'>
+                <Form.Label>Área del producto</Form.Label>
+                <Form.Select className='mb-3'>
+                  <option>Administración</option>
+                  <option>Sistemas</option>
+                </Form.Select>
+              </Form.Group>
+            </Col>
+            <Col sm='4' />
+            <Col sm='2' className='mt-4'>
+              <div className='d-grid gap-2'>
+                <Button variant='primary' onClick={handleSubmit}>
+                  <i className='fa-solid fa-magnifying-glass'></i>
+                </Button>
+              </div>
+            </Col>
+            <Col sm='2' className='mt-4'>
+              <div className='d-grid gap-2'>
+                <Button variant='danger'>
+                  <i className='fa-solid fa-trash'></i>
+                </Button>
+              </div>
+            </Col>
+          </Row>
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -84,7 +146,7 @@ export const AddProduct = () => {
                       <Form.Control type='number' placeholder='' />
                     </td>
                     <td>
-                      <Button variant='primary' type='submit'>
+                      <Button variant='primary'>
                         <i className='fa-solid fa-floppy-disk'></i>
                       </Button>
                     </td>
