@@ -16,8 +16,9 @@ if ($_POST['action'] == 'getProducts') {
     $array = [];
     $x = 0;
 
-    $sql = 'SELECT * FROM products';
+    $sql = 'SELECT * FROM products WHERE id_department = :id_department';
     $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id_department', $_POST['id_department']);
     $stmt->execute();
 
     if($stmt->rowCount() > 0) {
@@ -40,11 +41,12 @@ if ($_POST['action'] == 'addProduct') {
     $array = [];
     $x = 0;
 
-    $sql = "SELECT * FROM products WHERE name_product LIKE CONCAT('%', :name_product '%') 
+    $sql = "SELECT * FROM products WHERE id_department = :id_department AND name_product LIKE CONCAT('%', :name_product '%') 
             AND mark LIKE CONCAT('%', :mark '%') AND serial_number LIKE CONCAT('%', :serial_number '%')";
 
     $stmt = $db->prepare($sql);
 
+    $stmt->bindParam(':id_department', $_POST['id_department']);
     $stmt->bindParam(':name_product', $_POST['name_product']);
     $stmt->bindParam(':mark', $_POST['mark']);
     $stmt->bindParam(':serial_number', $_POST['serial_number']);

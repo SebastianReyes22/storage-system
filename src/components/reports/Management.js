@@ -12,6 +12,7 @@ export const Management = () => {
     const getProducts = async () => {
       let formData = new FormData();
       formData.append('action', 'getProducts');
+      formData.append('id_department', '1');
 
       await Axios({
         method: 'POST',

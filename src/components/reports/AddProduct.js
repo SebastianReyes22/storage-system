@@ -10,6 +10,8 @@ export const AddProduct = () => {
   const [name, setName] = useState('');
   const [mark, setMark] = useState('');
   const [code, setCode] = useState('');
+  const [department, setDepartment] = useState('');
+
   const [amount, setAmount] = useState(1);
 
   const handleChangeName = e => {
@@ -39,6 +41,7 @@ export const AddProduct = () => {
     formData.append('name_product', name);
     formData.append('mark', mark);
     formData.append('serial_number', code);
+    formData.append('id_department', department);
 
     await Axios({
       method: 'POST',
@@ -60,7 +63,6 @@ export const AddProduct = () => {
 
   // POST API to add product
   const handleSave = async (e, product) => {
-    console.log(product.id);
     let formData = new FormData();
     formData.append('action', 'saveProduct');
     formData.append('quantity', amount);
@@ -139,9 +141,12 @@ export const AddProduct = () => {
             <Col sm='4'>
               <Form.Group className='mb-3' controlId='formBasicName'>
                 <Form.Label>Área del producto</Form.Label>
-                <Form.Select className='mb-3'>
-                  <option>Administración</option>
-                  <option>Sistemas</option>
+                <Form.Select
+                  className='mb-3'
+                  value={department}
+                  onChange={e => setDepartment(e.target.value)}>
+                  <option value={1}>Administración</option>
+                  <option value={2}>Sistemas</option>
                 </Form.Select>
               </Form.Group>
             </Col>
