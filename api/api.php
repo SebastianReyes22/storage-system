@@ -63,7 +63,27 @@ if ($_POST['action'] == 'addProduct') {
             $x++;
         }
         echo json_encode($array);
-        }
+    } else {
+        echo json_encode(['status' => false]);
     }
+}
+
+// Add quantity product to management storage
+if ($_POST['action'] == 'saveProduct') {
+    $sql = "UPDATE products SET quantity = quantity + :quantity WHERE id_product = :id_product";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->bindParam(':quantity', $_POST['quantity']);
+    $stmt->bindParam(':id_product', $_POST['id_product']);
+
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(['status' => true]);
+    } else {
+        echo json_encode(['status' => false]);
+    }
+}
     
 ?>
