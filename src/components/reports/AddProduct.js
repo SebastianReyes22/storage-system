@@ -1,16 +1,16 @@
-import { NavBar } from '../ui/NavBar';
-import { Form, Button, Table, Col, Row } from 'react-bootstrap';
 import { useState } from 'react';
+import { NavBar } from '../ui/NavBar';
+import { Table, Row, Col, Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
 
 export const AddProduct = () => {
-  const URI = process.env.REACT_APP_SERVER_URL;
+  const URI = process.env.REACT_APP_API_URL;
 
   const [products, setProducts] = useState([]);
-
   const [name, setName] = useState('');
   const [mark, setMark] = useState('');
   const [code, setCode] = useState('');
+  const [amount, setAmount] = useState(1);
 
   const handleChangeName = e => {
     e.preventDefault();
@@ -27,6 +27,12 @@ export const AddProduct = () => {
     setCode(e.target.value);
   };
 
+  const handleChangeAmount = e => {
+    e.preventDefault();
+    setAmount(e.target.value);
+  };
+
+  // POST API to find product
   const handleSubmit = async () => {
     let formData = new FormData();
     formData.append('action', 'addProduct');
@@ -40,13 +46,51 @@ export const AddProduct = () => {
       data: formData,
       config: { headers: { 'Content-Type': 'multipart/form-data' } },
     })
-      .then(res => {
-        console.log(res);
-        setProducts(res.data);
+      .then(response => {
+        if (response.data.status === false) {
+          alert('Datos no encontrados');
+        } else {
+          setProducts(response.data);
+        }
       })
-      .catch(err => {
-        console.log(err);
+      .catch(error => {
+        console.log(error, 'error');
       });
+  };
+
+  // POST API to add product
+  const handleSave = async (e, product) => {
+    console.log(product.id);
+    let formData = new FormData();
+    formData.append('action', 'saveProduct');
+    formData.append('quantity', amount);
+    formData.append('id_product', product.id);
+
+    await Axios({
+      method: 'POST',
+      url: URI,
+      data: formData,
+      config: { headers: { 'Content-Type': 'multipart/form-data' } },
+    })
+      .then(response => {
+        if (response.data.status === false) {
+          alert('Error, no se pudo actualizar el producto');
+        } else {
+          alert('Producto actualizado');
+          window.location.reload();
+        }
+      })
+      .catch(error => {
+        console.log(error, 'error');
+      });
+  };
+
+  // Clean state
+  const handleClean = () => {
+    setName('');
+    setMark('');
+    setCode('');
+    setProducts([]);
   };
 
   return (
@@ -111,7 +155,7 @@ export const AddProduct = () => {
             </Col>
             <Col sm='2' className='mt-4'>
               <div className='d-grid gap-2'>
-                <Button variant='danger'>
+                <Button variant='danger' onClick={handleClean}>
                   <i className='fa-solid fa-trash'></i>
                 </Button>
               </div>
@@ -143,10 +187,17 @@ export const AddProduct = () => {
                     <td>{product.date}</td>
                     <td>{product.serial_number}</td>
                     <td>
-                      <Form.Control type='number' placeholder='' />
+                      <Form.Control
+                        type='number'
+                        placeholder=''
+                        value={amount}
+                        onChange={handleChangeAmount}
+                      />
                     </td>
                     <td>
-                      <Button variant='primary'>
+                      <Button
+                        variant='primary'
+                        onClick={e => handleSave(e, product)}>
                         <i className='fa-solid fa-floppy-disk'></i>
                       </Button>
                     </td>
