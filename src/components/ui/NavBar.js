@@ -1,8 +1,12 @@
 import { Navbar, Container, Nav } from 'react-bootstrap';
 
 export const NavBar = () => {
+  // const poscoLogo = `/images/poscoLogo.png`;
+  // const withPosco = `/images/withPosco.png`;
+
   return (
     <Navbar className='nav-bg' expand='lg' variant='dark'>
+      {/* <img src={poscoLogo} alt='poscoLogo' className='logo' /> */}
       <Container>
         <Navbar.Brand>
           <h1 className='nav-title'>Sistema de Inventarios</h1>
@@ -29,6 +33,7 @@ export const NavBar = () => {
             </h2>
           </Nav.Link>
         </Navbar.Collapse>
+        {/* <img src={withPosco} alt='poscoLogo' className='logo' /> */}
       </Container>
     </Navbar>
   );

@@ -99,6 +99,9 @@ export const AddProduct = () => {
     <>
       <NavBar />
       <div className='table-pd'>
+        <h3 className='title-table text-center mb-3'>
+          Añadir producto al inventario
+        </h3>
         <Form>
           <Row>
             <Col sm='4'>
