@@ -1,8 +1,23 @@
+import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../auth/authContext';
+import { types } from '../../types/types';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 
 export const NavBar = () => {
   // const poscoLogo = `/images/poscoLogo.png`;
   // const withPosco = `/images/withPosco.png`;
+  const { dispatch } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch({ type: types.logout });
+
+    navigate('/login', {
+      replace: true,
+    });
+  };
 
   return (
     <Navbar className='nav-bg' expand='lg' variant='dark'>
@@ -27,7 +42,7 @@ export const NavBar = () => {
               <h2 className='nav-subtitle'>Nuevo Producto</h2>
             </Nav.Link>
           </Nav>
-          <Nav.Link href='/'>
+          <Nav.Link onClick={handleLogout}>
             <h2 className='nav-subtitle'>
               <i className='fa-solid fa-arrow-right-from-bracket'></i> Salir
             </h2>

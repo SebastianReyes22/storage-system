@@ -1,24 +1,24 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Login } from './components/login/Login';
-import { AddProduct } from './components/reports/AddProduct';
-import { Management } from './components/reports/Management';
-import { NewProduct } from './components/reports/NewProduct';
-import { Reports } from './components/reports/Reports';
-import { Systems } from './components/reports/Systems';
+import { useEffect, useReducer } from 'react';
+import { AuthContext } from './auth/authContext';
+import { authReducer } from './auth/authReducer';
+import { AppRouter } from './routers/AppRouter';
 
-function App() {
+const init = () => {
+  return JSON.parse(localStorage.getItem('user')) || { logged: false };
+};
+
+export const App = () => {
+  const [user, dispatch] = useReducer(authReducer, {}, init);
+
+  useEffect(() => {
+    if (!user) return;
+
+    localStorage.setItem('user', JSON.stringify(user));
+  }, [user]);
+
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={<Login />} />
-        <Route path='/index' element={<Reports />} />
-        <Route path='/admin' element={<Management />} />
-        <Route path='/sistemas' element={<Systems />} />
-        <Route path='/add-product' element={<AddProduct />} />
-        <Route path='/new-product' element={<NewProduct />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthContext.Provider value={{ user, dispatch }}>
+      <AppRouter />
+    </AuthContext.Provider>
   );
-}
-
-export default App;
+};
