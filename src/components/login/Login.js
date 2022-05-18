@@ -37,6 +37,8 @@ export const Login = () => {
           navigate(lastPath, {
             replace: true,
           });
+        } else {
+          alert('Datos incorrectos');
         }
       })
       .catch(error => {
@@ -71,7 +73,10 @@ export const Login = () => {
                 onChange={e => setUserPwd(e.target.value)}
               />
             </Form.Group>
-            <Button className='card-button' type='submit'>
+            <Button
+              className='card-button'
+              type='submit'
+              onClick={handleSubmit}>
               Iniciar Sesión
             </Button>
           </Form>
