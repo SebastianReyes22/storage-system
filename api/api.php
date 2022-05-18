@@ -72,11 +72,13 @@ if ($_POST['action'] == 'addProduct') {
 
 // Add quantity product to management storage
 if ($_POST['action'] == 'saveProduct') {
-    $sql = "UPDATE products SET quantity = quantity + :quantity WHERE id_product = :id_product";
+    $sql = "UPDATE products SET quantity = quantity + :quantity WHERE id_product = :id_product;
+            UPDATE products SET date = :date WHERE id_product = :id_product;";
 
     $stmt = $db->prepare($sql);
 
     $stmt->bindParam(':quantity', $_POST['quantity']);
+    $stmt->bindParam(':date', $_POST['date']);
     $stmt->bindParam(':id_product', $_POST['id_product']);
 
     $stmt->execute();

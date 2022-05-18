@@ -14,6 +14,8 @@ export const AddProduct = () => {
 
   const [amount, setAmount] = useState(1);
 
+  const date = new Date().toJSON().slice(0, 19).replace('T', ' ');
+
   const handleChangeName = e => {
     e.preventDefault();
     setName(e.target.value);
@@ -29,9 +31,13 @@ export const AddProduct = () => {
     setCode(e.target.value);
   };
 
-  const handleChangeAmount = e => {
+  const handleChangeAmount = (e, product) => {
     e.preventDefault();
-    setAmount(e.target.value);
+    const fieldName = e.target.getAttribute('name');
+
+    if (fieldName === product.id.toString()) {
+      setAmount(e.target.value);
+    }
   };
 
   // POST API to find product
@@ -67,6 +73,7 @@ export const AddProduct = () => {
     formData.append('action', 'saveProduct');
     formData.append('quantity', amount);
     formData.append('id_product', product.id);
+    formData.append('date', date);
 
     await Axios({
       method: 'POST',
@@ -99,9 +106,7 @@ export const AddProduct = () => {
     <>
       <NavBar />
       <div className='table-pd'>
-        <h3 className='title-table text-center mb-3'>
-          Añadir producto al inventario
-        </h3>
+        <h3 className='title-table text-center mb-3'>Modificar inventario</h3>
         <Form>
           <Row>
             <Col sm='4'>
@@ -142,12 +147,14 @@ export const AddProduct = () => {
               </Form.Group>
             </Col>
             <Col sm='4'>
-              <Form.Group className='mb-3' controlId='formBasicName'>
+              <Form.Group className='mb-3' controlId='formBasicDepartment'>
                 <Form.Label>Área del producto</Form.Label>
                 <Form.Select
                   className='mb-3'
+                  placeholder='Nombre del departamento'
                   value={department}
                   onChange={e => setDepartment(e.target.value)}>
+                  <option>Seleccionar Departamento</option>
                   <option value={1}>Administración</option>
                   <option value={2}>Sistemas</option>
                 </Form.Select>
@@ -196,10 +203,11 @@ export const AddProduct = () => {
                     <td>{product.serial_number}</td>
                     <td>
                       <Form.Control
+                        name={product.id}
                         type='number'
                         placeholder=''
                         value={amount}
-                        onChange={handleChangeAmount}
+                        onChange={e => handleChangeAmount(e, product)}
                       />
                     </td>
                     <td>
