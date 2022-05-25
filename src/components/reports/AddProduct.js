@@ -9,8 +9,6 @@ export const AddProduct = () => {
   const [products, setProducts] = useState([]);
 
   const [name, setName] = useState('');
-  const [mark, setMark] = useState('');
-  const [code, setCode] = useState('');
 
   const [amount, setAmount] = useState(1);
   const date = new Date().toJSON().slice(0, 19).replace('T', ' ');
@@ -29,10 +27,11 @@ export const AddProduct = () => {
 
     let formData = new FormData();
     formData.append('action', 'addProduct');
-    formData.append('name_product', name);
-    formData.append('mark', mark);
-    formData.append('serial_number', code);
     formData.append('id_department', department);
+    formData.append('name_product', name);
+    formData.append('mark', name);
+    formData.append('serial_number', name);
+    formData.append('description', name);
 
     await Axios({
       method: 'POST',
@@ -82,8 +81,6 @@ export const AddProduct = () => {
   // Clean state
   const handleClean = () => {
     setName('');
-    setMark('');
-    setCode('');
     setProducts([]);
   };
 
@@ -92,44 +89,17 @@ export const AddProduct = () => {
       <h3 className='title-table text-center mb-3'>Modificar inventario</h3>
       <Form onSubmit={handleSubmit}>
         <Row>
-          <Col sm='4'>
-            <Form.Group className='mb-3' controlId='formBasicName'>
-              <Form.Label>Nombre</Form.Label>
+          <Col sm='8'>
+            <Form.Group className='mb-4' controlId='formBasicName'>
               <Form.Control
                 type='text'
-                placeholder='Nombre del producto'
+                placeholder='Código, descripción marca o nombre del producto'
                 autoComplete='off'
                 value={name}
                 onChange={e => setName(e.target.value)}
               />
             </Form.Group>
           </Col>
-          <Col sm='4'>
-            <Form.Group className='mb-3' controlId='formBasicMark'>
-              <Form.Label>Marca</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='Coca-Cola / Pepsi'
-                autoComplete='off'
-                value={mark}
-                onChange={e => setMark(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-          <Col sm='4'>
-            <Form.Group className='mb-3' controlId='formBasicCode'>
-              <Form.Label>Código</Form.Label>
-              <Form.Control
-                type='text'
-                placeholder='123456789'
-                autoComplete='off'
-                maxLength={19}
-                value={code}
-                onChange={e => setCode(e.target.value)}
-              />
-            </Form.Group>
-          </Col>
-          <Col sm='8' />
           <Col sm='2' className='mb-4'>
             <div className='d-grid gap-2'>
               <Button variant='primary' onClick={handleSubmit}>
@@ -145,7 +115,7 @@ export const AddProduct = () => {
             </div>
           </Col>
         </Row>
-        <Table striped bordered hover>
+        <Table striped bordered hover responsive>
           <thead>
             <tr>
               <th>#</th>

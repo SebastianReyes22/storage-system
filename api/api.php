@@ -58,7 +58,7 @@ if ($_POST['action'] == 'addProduct') {
     $x = 0;
 
     $sql = "SELECT * FROM products WHERE id_department = :id_department AND name_product LIKE CONCAT('%', :name_product '%') 
-            AND mark LIKE CONCAT('%', :mark '%') AND serial_number LIKE CONCAT('%', :serial_number '%')";
+            OR mark LIKE CONCAT('%', :mark '%') OR serial_number LIKE CONCAT('%', :serial_number '%') OR description LIKE CONCAT('%', :description '%')";
 
     $stmt = $db->prepare($sql);
 
@@ -66,6 +66,7 @@ if ($_POST['action'] == 'addProduct') {
     $stmt->bindParam(':name_product', $_POST['name_product']);
     $stmt->bindParam(':mark', $_POST['mark']);
     $stmt->bindParam(':serial_number', $_POST['serial_number']);
+    $stmt->bindParam(':description', $_POST['description']);
     
     $stmt->execute();
 
@@ -126,6 +127,36 @@ if ($_POST['action'] == 'newProduct') {
 
     if ($stmt->rowCount() > 0) {
         echo json_encode(['status' => true]);
+    } else {
+        echo json_encode(['status' => false]);
+    }
+}
+
+// Add an existing product to management storage mobile
+if ($_POST['action'] == 'addProductMobile') {
+    $array = [];
+    $x = 0;
+
+    $sql = "SELECT * FROM products WHERE serial_number LIKE CONCAT('%', :serial_number '%') OR name_product LIKE CONCAT('%', :name_product '%')";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->bindParam(':serial_number', $_POST['serial_number']);
+    $stmt->bindParam(':name_product', $_POST['name_product']);
+    
+    $stmt->execute();
+
+    if($stmt->rowCount() > 0) {
+        while($row = $stmt->fetch()) {
+            $array[$x]['serial_number'] = $row['serial_number'];
+            $array[$x]['mark'] = $row['mark'];
+            $array[$x]['name'] = $row['name_product'];
+            $array[$x]['description'] = $row['description'];
+            $array[$x]['quantity'] = $row['quantity'];
+            $array[$x]['date'] = $row['date'];
+            $x++;
+        }
+        echo json_encode($array);
     } else {
         echo json_encode(['status' => false]);
     }
