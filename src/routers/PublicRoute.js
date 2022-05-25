@@ -5,5 +5,9 @@ import { AuthContext } from '../auth/authContext';
 export const PublicRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
 
-  return user.logged ? <Navigate to='/admin' /> : children;
+  if (user.name === 'sistemas') {
+    return user.logged ? <Navigate to='/sistemas' /> : children;
+  } else {
+    return user.logged ? <Navigate to='/admin' /> : children;
+  }
 };

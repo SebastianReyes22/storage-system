@@ -11,6 +11,22 @@ try {
     die();
 }
 
+// Login
+if($_POST['action'] == 'login') {
+    $sql = 'SELECT * FROM users WHERE userName = :userName AND userPwd = :userPwd';
+    $stmt = $db->prepare($sql);
+
+    $stmt->bindParam(':userName', $_POST['userName']);
+    $stmt->bindParam(':userPwd', $_POST['userPwd']);
+    $stmt->execute();
+
+    if($stmt->rowCount() > 0) {
+        echo json_encode(['login' => true]);
+    } else {
+        echo json_encode(['login' => false]);
+    }
+}
+
 // Get all products from management
 if ($_POST['action'] == 'getProducts') {
     $array = [];
@@ -80,6 +96,31 @@ if ($_POST['action'] == 'saveProduct') {
     $stmt->bindParam(':quantity', $_POST['quantity']);
     $stmt->bindParam(':date', $_POST['date']);
     $stmt->bindParam(':id_product', $_POST['id_product']);
+
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(['status' => true]);
+    } else {
+        echo json_encode(['status' => false]);
+    }
+}
+
+// New product
+if ($_POST['action'] == 'newProduct') {
+    $sql = "INSERT INTO products (mark, name_product, description, quantity, serial_number, ideal_quantity, date, id_department) 
+            VALUES (:mark, :name_product, :description, :quantity, :serial_number, :ideal_quantity, :date, :id_department);";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->bindParam(':mark', $_POST['mark']);
+    $stmt->bindParam(':name_product', $_POST['name_product']);
+    $stmt->bindParam(':description', $_POST['description']);
+    $stmt->bindParam(':quantity', $_POST['quantity']);
+    $stmt->bindParam(':serial_number', $_POST['serial_number']);
+    $stmt->bindParam(':ideal_quantity', $_POST['ideal_quantity']);
+    $stmt->bindParam(':date', $_POST['date']);
+    $stmt->bindParam(':id_department', $_POST['id_department']);
 
     $stmt->execute();
 

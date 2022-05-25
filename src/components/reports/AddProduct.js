@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Table, Row, Col, Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
+import { AuthContext } from '../../auth/authContext';
 
 export const AddProduct = () => {
   const URI = process.env.REACT_APP_API_URL;
@@ -10,13 +11,22 @@ export const AddProduct = () => {
   const [name, setName] = useState('');
   const [mark, setMark] = useState('');
   const [code, setCode] = useState('');
-  const [department, setDepartment] = useState('');
 
   const [amount, setAmount] = useState(1);
   const date = new Date().toJSON().slice(0, 19).replace('T', ' ');
 
+  const { user } = useContext(AuthContext);
+
   // POST API to find product
   const handleSubmit = async () => {
+    var department = 0;
+
+    if (user.name === 'sistemas') {
+      department = 2;
+    } else {
+      department = 1;
+    }
+
     let formData = new FormData();
     formData.append('action', 'addProduct');
     formData.append('name_product', name);
@@ -110,7 +120,7 @@ export const AddProduct = () => {
             <Form.Group className='mb-3' controlId='formBasicCode'>
               <Form.Label>Código</Form.Label>
               <Form.Control
-                type='number'
+                type='text'
                 placeholder='123456789'
                 autoComplete='off'
                 maxLength={19}
@@ -119,29 +129,15 @@ export const AddProduct = () => {
               />
             </Form.Group>
           </Col>
-          <Col sm='4'>
-            <Form.Group className='mb-3' controlId='formBasicDepartment'>
-              <Form.Label>Área del producto</Form.Label>
-              <Form.Select
-                className='mb-3'
-                placeholder='Nombre del departamento'
-                value={department}
-                onChange={e => setDepartment(e.target.value)}>
-                <option>Seleccionar Departamento</option>
-                <option value={1}>Administración</option>
-                <option value={2}>Sistemas</option>
-              </Form.Select>
-            </Form.Group>
-          </Col>
-          <Col sm='4' />
-          <Col sm='2' className='mt-4'>
+          <Col sm='8' />
+          <Col sm='2' className='mb-4'>
             <div className='d-grid gap-2'>
               <Button variant='primary' onClick={handleSubmit}>
                 <i className='fa-solid fa-magnifying-glass'></i>
               </Button>
             </div>
           </Col>
-          <Col sm='2' className='mt-4'>
+          <Col sm='2' className='mb-4'>
             <div className='d-grid gap-2'>
               <Button variant='danger' onClick={handleClean}>
                 <i className='fa-solid fa-trash'></i>
@@ -187,7 +183,7 @@ export const AddProduct = () => {
                     <Button
                       variant='primary'
                       onClick={e => handleSave(e, product)}>
-                      <i className='fa-solid fa-floppy-disk'></i>
+                      <i className='fa-solid fa-floppy-disk' />
                     </Button>
                   </td>
                 </tr>

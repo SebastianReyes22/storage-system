@@ -41,33 +41,35 @@ export const Systems = () => {
         sheet='Hoja 1'
         buttonText='Descargar inventario'
       />
-      <Table striped bordered hover id='tableStorage'>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Marca</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-            <th>Descripción</th>
-            <th>Última fecha de actualización</th>
-            <th>Código</th>
-          </tr>
-        </thead>
-        <tbody>
-          {products &&
-            products.map(product => (
-              <tr key={product.id}>
-                <td>{product.id}</td>
-                <td>{product.mark}</td>
-                <td>{product.name}</td>
-                <td>{product.quantity}</td>
-                <td>{product.description}</td>
-                <td>{product.date}</td>
-                <td>{product.serial_number}</td>
-              </tr>
-            ))}
-        </tbody>
-      </Table>
+      <div className='table-style'>
+        <Table striped bordered hover responsive id='tableStorage'>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Marca</th>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Descripción</th>
+              <th>Última fecha de actualización</th>
+              <th>Código</th>
+            </tr>
+          </thead>
+          <tbody>
+            {products &&
+              products.map(product => (
+                <tr key={product.id}>
+                  <td>{product.id}</td>
+                  <td>{product.mark}</td>
+                  <td>{product.name}</td>
+                  <td>{product.quantity}</td>
+                  <td>{product.description}</td>
+                  <td>{product.date}</td>
+                  <td>{product.serial_number}</td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
+      </div>
     </div>
   );
 };

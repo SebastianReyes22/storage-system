@@ -30,7 +30,7 @@ export const Login = () => {
         if (response.data.login === true) {
           const action = {
             type: types.login,
-            payload: { name: 'Fernando' },
+            payload: { name: userName },
           };
           dispatch(action);
           const lastPath = localStorage.getItem('lastPath') || '/admin';
