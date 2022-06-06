@@ -57,8 +57,8 @@ if ($_POST['action'] == 'addProduct') {
     $array = [];
     $x = 0;
 
-    $sql = "SELECT * FROM products WHERE id_department = :id_department AND name_product LIKE CONCAT('%', :name_product '%') 
-            OR mark LIKE CONCAT('%', :mark '%') OR serial_number LIKE CONCAT('%', :serial_number '%') OR description LIKE CONCAT('%', :description '%')";
+    $sql = "SELECT * FROM products WHERE id_department = :id_department AND ( name_product LIKE CONCAT('%', :name_product '%') 
+            OR mark LIKE CONCAT('%', :mark '%') OR serial_number LIKE CONCAT('%', :serial_number '%') OR description LIKE CONCAT('%', :description '%') ) ORDER BY id_product ASC";
 
     $stmt = $db->prepare($sql);
 
@@ -89,12 +89,30 @@ if ($_POST['action'] == 'addProduct') {
 
 // Add quantity product to management storage
 if ($_POST['action'] == 'saveProduct') {
-    $sql = "UPDATE products SET quantity = quantity + :quantity WHERE id_product = :id_product;
+    $sql = "UPDATE products SET quantity = quantity + 1 WHERE id_product = :id_product;
             UPDATE products SET date = :date WHERE id_product = :id_product;";
 
     $stmt = $db->prepare($sql);
 
-    $stmt->bindParam(':quantity', $_POST['quantity']);
+    $stmt->bindParam(':date', $_POST['date']);
+    $stmt->bindParam(':id_product', $_POST['id_product']);
+
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(['status' => true]);
+    } else {
+        echo json_encode(['status' => false]);
+    }
+}
+
+// Delete quantity product to management storage
+if ($_POST['action'] == 'deleteProduct') {
+    $sql = "UPDATE products SET quantity = quantity - 1 WHERE id_product = :id_product;
+            UPDATE products SET date = :date WHERE id_product = :id_product;";
+
+    $stmt = $db->prepare($sql);
+
     $stmt->bindParam(':date', $_POST['date']);
     $stmt->bindParam(':id_product', $_POST['id_product']);
 

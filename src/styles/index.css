@@ -4,7 +4,7 @@
 }
 
 body {
-  background-color: #398AB9;
+  background-color: #1A374D;
 }
 
 /*  Login   */
@@ -25,7 +25,7 @@ body {
 }
 
 .card-title {
-  color: #1C658C; 
+  color: #1A374D; 
   margin-bottom: 20px;
   font-size: 42px;
   font-weight: bold;
@@ -33,7 +33,7 @@ body {
 }
 
 .card-subTitle{
-  color: #1C658C; 
+  color: #1A374D; 
   margin-bottom: 20px;
   font-size: 22px;
   font-weight: bold;
@@ -42,21 +42,21 @@ body {
 
 .card-button {
   width: 100%;
-  background-color: #1C658C;
-  border-color: #1C658C;
+  background-color: #1A374D;
+  border-color: #1A374D;
   color: #fff;
   font-size: x-large;
 }
 
 .card-button:hover {
-  background-color: #1C658C;
-  border-color: #1C658C;
+  background-color: #1A374D;
+  border-color: #1A374D;
   color: #D8D2CB;
 }
 
 /*  Navbar   */
 .nav-bg {
-  background-color: #1C658C;
+  background-color: #1A374D;
   font-size: 22px;
 }
 
@@ -76,7 +76,7 @@ body {
 /*  Storage Table   */
 .table-pd {
   padding: 20px;
-  background-color: #fff;
+  background-color: #D8D2CB;
   margin-top: 20px;
   margin-bottom: 20px;
   margin-right: 20px;

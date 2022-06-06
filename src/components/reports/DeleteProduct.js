@@ -3,7 +3,7 @@ import { Table, Row, Col, Form, Button } from 'react-bootstrap';
 import Axios from 'axios';
 import { AuthContext } from '../../auth/authContext';
 
-export const AddProduct = () => {
+export const DeleteProduct = () => {
   const { user } = useContext(AuthContext);
 
   const URI = process.env.REACT_APP_API_URL;
@@ -62,7 +62,7 @@ export const AddProduct = () => {
   // POST API to add product
   const handleSave = async (e, product) => {
     let formData = new FormData();
-    formData.append('action', 'saveProduct');
+    formData.append('action', 'deleteProduct');
     formData.append('id_product', product.id);
     formData.append('date', date);
 
@@ -95,7 +95,7 @@ export const AddProduct = () => {
   return (
     <div className='table-pd'>
       <h3 className='title-table text-center mb-3'>
-        Añadir stock al inventario
+        Eliminar stock del inventario
       </h3>
       <Form onSubmit={handleSubmit}>
         <Row>
@@ -165,7 +165,7 @@ export const AddProduct = () => {
                       <Button
                         variant='primary'
                         onClick={e => handleSave(e, product)}>
-                        <i className='fa-solid fa-plus' />
+                        <i className='fa-solid fa-minus' />
                       </Button>
                     </div>
                   </td>

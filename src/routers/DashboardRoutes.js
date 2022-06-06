@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { AddProduct } from '../components/reports/AddProduct';
+import { DeleteProduct } from '../components/reports/DeleteProduct';
 import { Management } from '../components/reports/Management';
 import { NewProduct } from '../components/reports/NewProduct';
 import { Reports } from '../components/reports/Reports';
@@ -15,6 +16,7 @@ export const DashboardRoutes = () => {
         <Route path='admin' element={<Management />} />
         <Route path='sistemas' element={<Systems />} />
         <Route path='add-product' element={<AddProduct />} />
+        <Route path='delete-product' element={<DeleteProduct />} />
         <Route path='new-product' element={<NewProduct />} />
       </Routes>
     </>

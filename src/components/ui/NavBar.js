@@ -28,24 +28,25 @@ export const NavBar = () => {
               <h1 className='nav-title'>Sistema de Inventarios</h1>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
-            <Navbar.Collapse id='basic-navbar-nav'>
-              <Nav className='me-auto'>
-                <Nav.Link href='/sistemas'>
-                  <h2 className='nav-subtitle'>Inventario {user.name}</h2>
-                </Nav.Link>
-                <Nav.Link href='/add-product'>
-                  <h2 className='nav-subtitle'>Modificar Inventario</h2>
-                </Nav.Link>
-                <Nav.Link href='/new-product'>
-                  <h2 className='nav-subtitle'>Nuevo Producto</h2>
-                </Nav.Link>
-              </Nav>
+            <Nav className='ml-auto'>
+              <Nav.Link href='/sistemas'>
+                <h2 className='nav-subtitle'>Inventario {user.name}</h2>
+              </Nav.Link>
+              <Nav.Link href='/add-product'>
+                <h2 className='nav-subtitle'>Añadir Stock</h2>
+              </Nav.Link>
+              <Nav.Link href='/delete-product'>
+                <h2 className='nav-subtitle'>Baja de Stock</h2>
+              </Nav.Link>
+              <Nav.Link href='/new-product'>
+                <h2 className='nav-subtitle'>Nuevo Producto</h2>
+              </Nav.Link>
               <Nav.Link onClick={handleLogout}>
                 <h2 className='nav-subtitle'>
                   <i className='fa-solid fa-arrow-right-from-bracket'></i> Salir
                 </h2>
               </Nav.Link>
-            </Navbar.Collapse>
+            </Nav>
           </Container>
         </Navbar>
       ) : (
@@ -55,25 +56,25 @@ export const NavBar = () => {
               <h1 className='nav-title'>Sistema de Inventarios</h1>
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
-            <Navbar.Collapse id='basic-navbar-nav'>
-              <Nav className='me-auto'>
-                <Nav.Link href='/admin'>
-                  <h2 className='nav-subtitle'>Inventario {user.name}</h2>
-                </Nav.Link>
-                <Nav.Link href='/add-product'>
-                  <h2 className='nav-subtitle'>Agregar Producto</h2>
-                </Nav.Link>
-                <Nav.Link href='/new-product'>
-                  <h2 className='nav-subtitle'>Nuevo Producto</h2>
-                </Nav.Link>
-              </Nav>
-              <Nav.Link onClick={handleLogout}>
-                <h2 className='nav-subtitle'>
-                  <i className='fa-solid fa-arrow-right-from-bracket'></i> Salir
-                </h2>
+            <Nav className='ml-auto'>
+              <Nav.Link href='/admin'>
+                <h2 className='nav-subtitle'>Inventario {user.name}</h2>
               </Nav.Link>
-            </Navbar.Collapse>
-            {/* <img src={withPosco} alt='poscoLogo' className='logo' /> */}
+              <Nav.Link href='/add-product'>
+                <h2 className='nav-subtitle'>Agregar Stock</h2>
+              </Nav.Link>
+              <Nav.Link href='/delete-product'>
+                <h2 className='nav-subtitle'>Baja de Stock</h2>
+              </Nav.Link>
+              <Nav.Link href='/new-product'>
+                <h2 className='nav-subtitle'>Nuevo Producto</h2>
+              </Nav.Link>
+            </Nav>
+            <Nav.Link onClick={handleLogout}>
+              <h2 className='nav-subtitle'>
+                <i className='fa-solid fa-arrow-right-from-bracket'></i> Salir
+              </h2>
+            </Nav.Link>
           </Container>
         </Navbar>
       )}
