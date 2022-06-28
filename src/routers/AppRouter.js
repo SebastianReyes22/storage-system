@@ -6,7 +6,7 @@ import { Login } from '../components/login/Login';
 
 export const AppRouter = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename='/sistema-inventario'>
       <Routes>
         <Route
           path='/login'
