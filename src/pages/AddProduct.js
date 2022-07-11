@@ -1,29 +1,19 @@
 import { useRef, useState } from 'react';
-import { Table, Row, Col, Form, Button, Card } from 'react-bootstrap';
 import Axios from 'axios';
 import { useUserAuth } from '../context/UserAuthContext';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faMagnifyingGlass,
-  faPlus,
-  faTrash,
-} from '@fortawesome/free-solid-svg-icons';
+import { SystemsProducts } from '../components/addProduct/SystemsProducts';
+import { AdminProducts } from '../components/addProduct/AdminProducts';
 
 export const AddProduct = () => {
-  const { user } = useUserAuth();
+  const { user } = useUserAuth(); // user is an object with email and password
 
-  const URI = process.env.REACT_APP_API_URL;
+  const URI = process.env.REACT_APP_API_URL; // database url
 
-  const [products, setProducts] = useState([]);
-  const [name, setName] = useState('');
-  const date = new Date().toJSON().slice(0, 19).replace('T', ' ');
+  const [products, setProducts] = useState([]); // products array
+  const [name, setName] = useState(''); // name of the product
+  const date = new Date().toJSON().slice(0, 19).replace('T', ' '); // 2020-05-06T19:00:00
 
-  const inputFocus = useRef(null);
-
-  const changeName = e => {
-    e.preventDefault();
-    setName(e.target.value);
-  };
+  const inputFocus = useRef(null); // input ref to focus on
 
   // POST API to find product
   const handleSubmit = async e => {
@@ -91,101 +81,69 @@ export const AddProduct = () => {
       });
   };
 
+  // POST API to delete product
+  const handleDelete = async (e, product) => {
+    let formData = new FormData();
+    formData.append('action', 'deleteProduct');
+    formData.append('id_product', product.id);
+    formData.append('date', date);
+
+    await Axios({
+      method: 'POST',
+      url: URI,
+      data: formData,
+      config: { headers: { 'Content-Type': 'multipart/form-data' } },
+    })
+      .then(response => {
+        if (response.data.status === false) {
+          alert('Error, no se pudo actualizar el producto');
+        } else {
+          alert('Producto actualizado');
+          window.location.reload();
+        }
+      })
+      .catch(error => {
+        console.log(error, 'error');
+      });
+  };
+
   // Clean state
   const handleClean = () => {
     setName('');
     setProducts([]);
   };
 
+  const handleChange = (e, product) => {
+    return product.quantity + 1;
+  };
+
   return (
-    <div className='component'>
-      <Col className='mt-2 col-sm-11 mb-5'>
-        <Card className='card-style-bitacora'>
-          <Card.Header className='titleLogin'>
-            Añadir stock al inventario
-          </Card.Header>
-          <Card.Body>
-            <Form onSubmit={handleSubmit}>
-              <Row>
-                <Col sm='8'>
-                  <Form.Group className='mb-4' controlId='formBasicName'>
-                    <Form.Control
-                      autoFocus
-                      ref={inputFocus}
-                      type='text'
-                      placeholder='Código, descripción marca o nombre del producto'
-                      autoComplete='off'
-                      value={name}
-                      onChange={changeName}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col sm='2' className='mb-4'>
-                  <div className='d-grid gap-2'>
-                    <Button variant='primary' onClick={handleSubmit}>
-                      <FontAwesomeIcon icon={faMagnifyingGlass} />
-                    </Button>
-                  </div>
-                </Col>
-                <Col sm='2' className='mb-4'>
-                  <div className='d-grid gap-2'>
-                    <Button variant='danger' onClick={handleClean}>
-                      <FontAwesomeIcon icon={faTrash} />
-                    </Button>
-                  </div>
-                </Col>
-              </Row>
-              <div className='table-style2'>
-                <Table striped bordered hover responsive>
-                  <thead>
-                    <tr>
-                      <th>#</th>
-                      <th>Marca</th>
-                      <th>Producto</th>
-                      <th>Cantidad</th>
-                      <th>Descripción</th>
-                      <th>Última fecha de actualización</th>
-                      <th>Código</th>
-                      <th>Guardar</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products &&
-                      products.map(product => (
-                        <tr key={product.id}>
-                          <td>{product.id}</td>
-                          <td>{product.mark}</td>
-                          <td>{product.name}</td>
-                          <td>{product.quantity}</td>
-                          <td>{product.description}</td>
-                          <td>{product.date}</td>
-                          <td>{product.serial_number}</td>
-                          {/*<td>
-                            <Form.Control
-                              name={product.id}
-                              type='number'
-                              value={amount}
-                              onChange={e => changeAmount(e, product)}
-                            />
-                          </td>*/}
-                          <td>
-                            <div className='d-grid gap-2'>
-                              <Button
-                                variant='primary'
-                                onClick={e => handleSave(e, product)}>
-                                <FontAwesomeIcon icon={faPlus} />
-                              </Button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </Table>
-              </div>
-            </Form>
-          </Card.Body>
-        </Card>
-      </Col>
-    </div>
+    <>
+      {user.email == 'sistemas@poscomppc.com' ? (
+        <SystemsProducts
+          handleSubmit={handleSubmit}
+          inputFocus={inputFocus}
+          handleSave={handleSave}
+          handleDelete={handleDelete}
+          handleClean={handleClean}
+          products={products}
+          name={name}
+          setName={setName}
+        />
+      ) : (
+        <AdminProducts
+          inputFocus={inputFocus}
+          products={products}
+          setProducts={setProducts}
+          name={name}
+          setName={setName}
+          handleSubmit={handleSubmit}
+          handleChange={handleChange}
+          handleSave={handleSave}
+          handleDelete={handleDelete}
+          handleClean={handleClean}
+        />
+      )}
+    </>
   );
 };

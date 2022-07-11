@@ -9,7 +9,7 @@ export const EditableRow = ({
   handleEditFormSubmit,
 }) => {
   return (
-    <tr>
+    <tr key={editFormData.id}>
       <td>{editFormData.id}</td>
       <td>
         <Form.Control
@@ -38,16 +38,16 @@ export const EditableRow = ({
       <td>
         <Form.Control
           name='quantity'
-          type='text'
+          type='numeric'
           value={editFormData.quantity}
           onChange={handleEditFormChange}
         />
       </td>
       <td>
         <Form.Control
-          name='idealQuantity'
-          type='text'
-          value={editFormData.ideal_quantity}
+          name='ideal'
+          type='number'
+          value={editFormData.ideal}
           onChange={handleEditFormChange}
         />
       </td>
@@ -63,7 +63,7 @@ export const EditableRow = ({
         <Form.Control
           name='code'
           type='text'
-          value={editFormData.serial_number}
+          value={editFormData.code}
           onChange={handleEditFormChange}
         />
       </td>

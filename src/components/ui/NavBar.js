@@ -36,9 +36,6 @@ export const NavBar = () => {
               <Nav.Link href='./add-product'>
                 <h2 className='nav-subtitle'>Añadir Stock</h2>
               </Nav.Link>
-              <Nav.Link href='./delete-product'>
-                <h2 className='nav-subtitle'>Baja de Stock</h2>
-              </Nav.Link>
               <Nav.Link href='./new-product'>
                 <h2 className='nav-subtitle'>Nuevo Producto</h2>
               </Nav.Link>
@@ -62,9 +59,6 @@ export const NavBar = () => {
             <Navbar.Brand>
               <img src={poscoLogo} className='img-logo' alt='Posco' />
             </Navbar.Brand>
-            <Navbar.Brand>
-              <h1 className='nav-title'>Sistema de Inventarios</h1>
-            </Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
             <Nav className='ml-auto'>
               <Nav.Link href='./admin'>
@@ -73,11 +67,11 @@ export const NavBar = () => {
               <Nav.Link href='./add-product'>
                 <h2 className='nav-subtitle'>Añadir Stock</h2>
               </Nav.Link>
-              <Nav.Link href='./delete-product'>
-                <h2 className='nav-subtitle'>Baja de Stock</h2>
-              </Nav.Link>
               <Nav.Link href='./new-product'>
                 <h2 className='nav-subtitle'>Nuevo Producto</h2>
+              </Nav.Link>
+              <Nav.Link href='./dashboard'>
+                <h2 className='nav-subtitle'>Base de Datos</h2>
               </Nav.Link>
               <Nav.Link onClick={handleLogout}>
                 <h2 className='nav-subtitle'>

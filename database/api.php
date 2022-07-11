@@ -33,7 +33,8 @@ if ($_POST['action'] == 'getProducts') {
     $x = 0;
 
     //$sql = 'SELECT * FROM products WHERE id_department = :id_department ORDER BY mark ASC';
-    $sql = 'SELECT *, (ideal_quantity-quantity) AS resta FROM products WHERE id_department = :id_department ORDER BY mark ASC';
+    //$sql = 'SELECT *, REPLACE(ideal_quantity-quantity, "-","") AS resta FROM products WHERE id_department = :id_department ORDER BY mark ASC';
+    $sql = 'SELECT *, (quantity-ideal_quantity) AS resta FROM products WHERE id_department = :id_department ORDER BY mark ASC';
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':id_department', $_POST['id_department']);
     $stmt->execute();
@@ -183,5 +184,70 @@ if ($_POST['action'] == 'addProductMobile') {
         echo json_encode(['status' => false]);
     }
 }
-    
+
+// Ubdate product in database
+if ($_POST['action'] == 'saveProductDB') {
+    $sql = "UPDATE products SET mark = :mark WHERE id_product = :id_product;
+            UPDATE products SET name_product = :name_product WHERE id_product = :id_product;
+            UPDATE products SET description = :description WHERE id_product = :id_product;
+            UPDATE products SET quantity = :quantity WHERE id_product = :id_product;
+            UPDATE products SET ideal_quantity = :ideal_quantity WHERE id_product = :id_product;
+            UPDATE products SET date = :date WHERE id_product = :id_product;
+            UPDATE products SET serial_number = :serial_number WHERE id_product = :id_product;";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->bindParam(':id_product', $_POST['id_product']);
+    $stmt->bindParam(':mark', $_POST['mark']);
+    $stmt->bindParam(':name_product', $_POST['name_product']);
+    $stmt->bindParam(':description', $_POST['description']);
+    $stmt->bindParam(':quantity', $_POST['quantity']);
+    $stmt->bindParam(':ideal_quantity', $_POST['ideal_quantity']);
+    $stmt->bindParam(':date', $_POST['date']);
+    $stmt->bindParam(':serial_number', $_POST['serial_number']);
+
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(['status' => true]);
+    } else {
+        echo json_encode(['status' => false]);
+    }
+}
+
+// Delete product in database
+if($_POST['action'] == 'deleteProductDB') {
+    $sql = "DELETE FROM products WHERE id_product = :id_product;";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->bindParam(':id_product', $_POST['id_product']);
+
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(['status' => true]);
+    } else {
+        echo json_encode(['status' => false]);
+    }
+}
+
+// Ubdate product in database
+if ($_POST['action'] == 'saveModifiedProduct') {
+    $sql = "UPDATE products SET quantity = :quantity WHERE id_product = :id_product;";
+
+    $stmt = $db->prepare($sql);
+
+    $stmt->bindParam(':id_product', $_POST['id_product']);
+    $stmt->bindParam(':quantity', $_POST['quantity']);
+
+    $stmt->execute();
+
+    if ($stmt->rowCount() > 0) {
+        echo json_encode(['status' => true]);
+    } else {
+        echo json_encode(['status' => false]);
+    }
+}
+
 ?>

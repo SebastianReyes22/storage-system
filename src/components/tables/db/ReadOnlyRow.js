@@ -3,7 +3,7 @@ import { Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 
-export const ReadOnlyRow = ({ product, handleEditClick }) => {
+export const ReadOnlyRow = ({ product, handleEditClick, handleDelete }) => {
   return (
     <tr key={product.id}>
       <td className='td-db'>{product.id}</td>
@@ -23,7 +23,7 @@ export const ReadOnlyRow = ({ product, handleEditClick }) => {
       </td>
       <td className='td-db'>
         <div className='bd-btn'>
-          <Button variant='danger'>
+          <Button variant='danger' onClick={e => handleDelete(e, product)}>
             <FontAwesomeIcon icon={faTrash} />
           </Button>
         </div>
