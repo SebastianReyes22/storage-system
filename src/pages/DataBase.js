@@ -87,10 +87,10 @@ export const DataBase = () => {
     })
       .then(response => {
         if (response.data.status === false) {
-          alert('Error, no se pudo actualizar el producto');
-        } else {
-          alert('Producto actualizado');
           window.location.reload();
+          alert('Producto actualizado');
+        } else {
+          alert('Error, no se pudo actualizar el producto');
         }
       })
       .catch(error => {

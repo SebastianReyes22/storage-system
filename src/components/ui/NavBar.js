@@ -29,7 +29,7 @@ export const NavBar = () => {
               <img src={poscoLogo} className='img-logo' alt='Posco' />
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
-            <Nav className='nav-pad'>
+            <Nav className='me-auto'>
               <Nav.Link href='./sistemas'>
                 <h2 className='nav-subtitle'>Inventario</h2>
               </Nav.Link>
@@ -60,7 +60,7 @@ export const NavBar = () => {
               <img src={poscoLogo} className='img-logo' alt='Posco' />
             </Navbar.Brand>
             <Navbar.Toggle aria-controls='basic-navbar-nav' />
-            <Nav className='ml-auto'>
+            <Nav className='me-auto'>
               <Nav.Link href='./admin'>
                 <h2 className='nav-subtitle'>Inventario</h2>
               </Nav.Link>
@@ -74,7 +74,7 @@ export const NavBar = () => {
                 <h2 className='nav-subtitle'>Base de Datos</h2>
               </Nav.Link>
               <Nav.Link onClick={handleLogout}>
-                <h2 className='nav-subtitle'>
+                <h2 className='nav-subtitle nav-left'>
                   <FontAwesomeIcon icon={faArrowAltCircleRight} /> Salir
                 </h2>
               </Nav.Link>
