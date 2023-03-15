@@ -16,7 +16,7 @@ export const EditableRow = ({
       <td>
         <Form.Control
           name='quantity'
-          type='numeric'
+          type='number'
           value={editFormData.quantity}
           onChange={handleEditFormChange}
         />
